@@ -34,6 +34,12 @@ def faussePosition(f, x0, x1, m = -3, maxiter=100):
 
     return xs
 
+#########################################################
+## Print les xn pour chaque itération dans la console
+def printTable(xs):
+    for x in xs:
+        print(f"{x:.10f}")
+
 ##################################################################################################
 ## Generer le tableau des resultats
 def table_latex(xn):
@@ -76,10 +82,27 @@ def table_latex(xn):
 
     return "\n".join(lines)
 
+#############################3
+### Exercice 3.4 a)
+print("Exercice 3.4 a)")
 def f(t):
     return -0.9*t**2 + 1.7*t + 2.5
 
 result = faussePosition(f, 2.8, 3, -3, 100)
-print(result)
+printTable(result)
+print("---------------------------------------------------")
+tableLatex = table_latex(result)
+print(tableLatex)
+
+#################################
+## Exercice 3.4 b)
+print("---------------------------------------")
+print("Exercice 3.4 b)")
+def f(t):
+    return (t**3 + 5 * t - 1) / (t - 0.5)
+
+result = faussePosition(f, 0, 0.4, -3, 100)
+printTable(result)
+print("---------------------------------------------------")
 tableLatex = table_latex(result)
 print(tableLatex)
