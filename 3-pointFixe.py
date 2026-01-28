@@ -81,7 +81,7 @@ print(tableLatex)
 ##############################################################
 ## Exemple 3.8
 def g2(t):
-    return -1 / (t**4 - 1)
+    return -1 / (t**4 + 1)
 
 result = point_fixe(g2,-0.73,-6,10)
 printTable(result)
