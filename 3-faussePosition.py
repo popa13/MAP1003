@@ -82,6 +82,85 @@ def table_latex(xn):
 
     return "\n".join(lines)
 
+def table_console(xn, nbC):
+    """
+    Pretty console table of iterations x_n with errors and convergence ratios.
+
+    Parameters
+    ----------
+    xn  : list or array of floats
+        Sequence of iterates x_0, x_1, ..., x_n
+    nbC : int
+        Number of digits after decimal point
+    """
+
+    # --- Compute errors e_n = |x_n - x_{n-1}| ---
+    errors = [None]
+    for n in range(1, len(xn)):
+        errors.append(abs(xn[n] - xn[n-1]))
+
+    # Column widths
+    w_n   = 4
+    w_x   = nbC + 8
+    w_e   = nbC + 8
+    w_r   = nbC + 10
+
+    # Header
+    header = (
+        f"{'n':>{w_n}} | "
+        f"{'x_n':>{w_x}} | "
+        f"{'e_n':>{w_e}} | "
+        f"{'|e_n/e_{n-1}|':>{w_r}} | "
+        f"{'|e_n/e_{n-1}^2|':>{w_r}}"
+    )
+
+    line_sep = "-" * len(header)
+
+    print(line_sep)
+    print(header)
+    print(line_sep)
+
+    # Rows
+    for n in range(len(xn)):
+        x_str = f"{xn[n]:.{nbC}f}"
+
+        if n == 0:
+            print(
+                f"{n:>{w_n}} | "
+                f"{x_str:>{w_x}} | "
+                f"{'--':>{w_e}} | "
+                f"{'--':>{w_r}} | "
+                f"{'--':>{w_r}}"
+            )
+
+        elif n == 1:
+            e_str = f"{errors[n]:.{nbC}f}"
+            print(
+                f"{n:>{w_n}} | "
+                f"{x_str:>{w_x}} | "
+                f"{e_str:>{w_e}} | "
+                f"{'--':>{w_r}} | "
+                f"{'--':>{w_r}}"
+            )
+
+        else:
+            e_str  = f"{errors[n]:.{nbC}f}"
+            ratio1 = errors[n] / errors[n-1]
+            ratio2 = errors[n] / (errors[n-1] ** 2)
+
+            r1_str = f"{ratio1:.{nbC}f}"
+            r2_str = f"{ratio2:.{nbC}f}"
+
+            print(
+                f"{n:>{w_n}} | "
+                f"{x_str:>{w_x}} | "
+                f"{e_str:>{w_e}} | "
+                f"{r1_str:>{w_r}} | "
+                f"{r2_str:>{w_r}}"
+            )
+
+    print(line_sep)
+
 #############################3
 ### Exercice 3.4 a)
 print("Exercice 3.4 a)")
