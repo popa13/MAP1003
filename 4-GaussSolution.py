@@ -42,40 +42,96 @@ def subsRebourd(B,c):
     :return: solution du systeme Bx = b
     """
     n = c.size
+    nbOps = 0
 
     x = np.zeros(n)
     x = x.reshape((n,1))
 
     x[n-1] = c[n-1] / B[n-1,n-1]
+    nbOps += 1
 
-    for k in range(n):
+    for k in range(1,n,1): #k = 1, ..., n-1
         s = 0
         for j in np.arange(n - k + 1, n+1, 1):
-            s = s + B[n-k-1,j-1] * x[j-1]
+            s += B[n-k-1,j-1] * x[j-1]
+            nbOps += 3
         x[n-k-1] = (c[n-k-1] - s) / B[n-k-1,n-k-1]
+        nbOps += 2
 
+    print("Le nombre d'opérations est " + str(nbOps))
+    return x
+
+def subsRebourdv2(B, c):
+    """
+    :param B: Matrix triangulaire superieure
+    :param c: vecteur du membre de droite
+    :return: solution du systeme Bx = b
+    """
+    n = c.size
+    nbOps = 0
+
+    x = np.zeros(n)
+    x = x.reshape((n, 1))
+
+    for k in range(n): # k = 0, ..., n-1
+        s = c[n - k - 1]
+        for j in np.arange(n - k + 1, n + 1, 1):
+            s = s - B[n - k - 1, j - 1] * x[j - 1]
+            nbOps += 2
+        x[n - k - 1] = s / B[n - k - 1, n - k - 1]
+        nbOps += 1
+
+    print("Le nombre d'opérations est " + str(nbOps))
     return x
 
 nbC = 2
+exempleNb = "4.3"
 
-####################
-## Exemple 4.1
-print("Exemple 4.1")
-A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
-printMatrix(A,"A")
-b = np.array([[6], [-9], [8]])
-printMatrix(b, "b")
-result = elimGauss(A, b)
-printMatrix(result[0], "A triangulaire sup")
-printMatrix(result[1], "b modifie")
+if exempleNb == "4.1":
+    ####################
+    ## Exemple 4.1
+    print("-----------------------------------------")
+    print("------------ Exemple 4.1 ----------------")
+    A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
+    printMatrix(A,"A")
+    b = np.array([[6], [-9], [8]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
 
-sol = subsRebourd(result[0], result[1])
-printMatrix(sol,"x")
+    # Non optimal substituion
+    print("---------------")
+    print("Substitution 1ere version")
+    sol = subsRebourd(result[0], result[1])
+    printMatrix(sol, "x")
 
-# Avec sympy
-A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
-A_ef = sp.Matrix(A).echelon_form()
-printMatrix(A_ef, "A_ef")
+    # Optimal substitution
+    print("---------------")
+    print("Substitution 2ieme version")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
 
+    # Avec sympy
+    print("---- Avec Sympy ----")
+    A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
+    A_ef = sp.Matrix(A).echelon_form()
+    printMatrix(A_ef, "A_ef")
+    print("----------------------------------------")
 
+if exempleNb == "4.3":
+    ########
+    ## Exemple 4.3
+    A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
+    printMatrix(A, "A")
+    b = np.array([[1], [-1], [1]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
 
+    # Optimal substitution
+    print("---------------")
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
