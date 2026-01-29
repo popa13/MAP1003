@@ -2,6 +2,11 @@ import numpy as np
 import sympy as sp
 
 def printMatrix(arr, name):
+    """
+    :param arr: tableau a afficher dans la console
+    :param name: le nom du tableau a afficher
+    :return: none
+    """
     toPrint = ' '
     nbRows = arr.shape[0]
     nbCols = arr.shape[1]
@@ -14,6 +19,11 @@ def printMatrix(arr, name):
     print(name + " = \n" + toPrint)
 
 def elimGauss(A,b):
+    """
+    :param A: matrice de dimension n x n
+    :param b: membre de droite de l'equation Ax = b
+    :return: systeme Bx = c ou B est triangulaire superieure
+    """
     N = b.size
 
     for n in range(N):
@@ -26,10 +36,16 @@ def elimGauss(A,b):
     return A,b
 
 def subsRebourd(B,c):
+    """
+    :param B: Matrix triangulaire superieure
+    :param c: vecteur du membre de droite
+    :return: solution du systeme Bx = b
+    """
     n = c.size
 
-    x = np.arange(n)
+    x = np.zeros(n)
     x = x.reshape((n,1))
+
     x[n-1] = c[n-1] / B[n-1,n-1]
 
     for k in range(n):
@@ -44,6 +60,7 @@ nbC = 2
 
 ####################
 ## Exemple 4.1
+print("Exemple 4.1")
 A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
 printMatrix(A,"A")
 b = np.array([[6], [-9], [8]])
