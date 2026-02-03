@@ -35,57 +35,57 @@ def elimGauss(A,b):
 
     return A,b
 
-def subsRebourd(B,c):
+def subsRebourd(U, b):
     """
-    :param B: Matrix triangulaire superieure
-    :param c: vecteur du membre de droite
-    :return: solution du systeme Bx = b
+    :param U: Matrix triangulaire superieure
+    :param b: vecteur du membre de droite
+    :return: solution du systeme Ux = b
     """
-    n = c.size
+    n = b.size
     nbOps = 0
 
     x = np.zeros(n)
     x = x.reshape((n,1))
 
-    x[n-1] = c[n-1] / B[n-1,n-1]
+    x[n-1] = b[n-1] / U[n-1,n-1]
     nbOps += 1
 
     for k in range(1,n,1): #k = 1, ..., n-1
         s = 0
         for j in np.arange(n - k + 1, n+1, 1):
-            s += B[n-k-1,j-1] * x[j-1]
-            nbOps += 3
-        x[n-k-1] = (c[n-k-1] - s) / B[n-k-1,n-k-1]
+            s += U[n-k-1,j-1] * x[j-1]
+            nbOps += 2
+        x[n-k-1] = (b[n-k-1] - s) / U[n-k-1,n-k-1]
         nbOps += 2
 
     print("Le nombre d'opérations est " + str(nbOps))
     return x
 
-def subsRebourdv2(B, c):
+def subsRebourdv2(U, b):
     """
-    :param B: Matrix triangulaire superieure
-    :param c: vecteur du membre de droite
-    :return: solution du systeme Bx = b
+    :param U: Matrix triangulaire superieure
+    :param b: vecteur du membre de droite
+    :return: solution du systeme Ux = b
     """
-    n = c.size
+    n = b.size
     nbOps = 0
 
     x = np.zeros(n)
     x = x.reshape((n, 1))
 
     for k in range(n): # k = 0, ..., n-1
-        s = c[n - k - 1]
+        s = b[n - k - 1]
         for j in np.arange(n - k + 1, n + 1, 1):
-            s = s - B[n - k - 1, j - 1] * x[j - 1]
+            s = s - U[n - k - 1, j - 1] * x[j - 1]
             nbOps += 2
-        x[n - k - 1] = s / B[n - k - 1, n - k - 1]
+        x[n - k - 1] = s / U[n - k - 1, n - k - 1]
         nbOps += 1
 
     print("Le nombre d'opérations est " + str(nbOps))
     return x
 
 nbC = 2
-exempleNb = "4.4"
+exempleNb = "4.1"
 
 if exempleNb == "4.1":
     ####################
