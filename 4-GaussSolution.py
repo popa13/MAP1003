@@ -85,7 +85,7 @@ def subsRebourdv2(B, c):
     return x
 
 nbC = 2
-exempleNb = "4.3"
+exempleNb = "4.4"
 
 if exempleNb == "4.1":
     ####################
@@ -122,6 +122,8 @@ if exempleNb == "4.1":
 if exempleNb == "4.3":
     ########
     ## Exemple 4.3
+    print("-----------------------------------------")
+    print("------------ Exemple 4.3 ----------------")
     A = np.array([[2, -1, 1], [-2, 2, -3], [4, -1, -1]])
     printMatrix(A, "A")
     b = np.array([[1], [-1], [1]])
@@ -132,6 +134,38 @@ if exempleNb == "4.3":
 
     # Optimal substitution
     print("---------------")
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "4.4":
+    ########
+    ## Exemple 4.4
+    print("-----------------------------------------")
+    print("------------ Exemple 4.4 ----------------")
+    A = np.array([[1, 2], [1.1, 2]])
+    printMatrix(A, "A")
+    b = np.array([[10], [10.4]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+    # Coefficient 1.1 perturbé à 1.05
+    print("-----")
+    print("Coefficient 1.1 perturbé et amené à 1.05")
+    A = np.array([[1, 2], [1.05, 2]])
+    printMatrix(A, "A")
+    b = np.array([[10], [10.4]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
     print("Substitution")
     sol = subsRebourdv2(result[0], result[1])
     printMatrix(sol, "x")

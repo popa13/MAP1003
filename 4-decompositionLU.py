@@ -18,23 +18,6 @@ def printMatrix(arr, name):
             toPrint += '\n '
     print(name + " = \n" + toPrint)
 
-def printMatrix(arr, name):
-    """
-    :param arr: tableau a afficher dans la console
-    :param name: le nom du tableau a afficher
-    :return: none
-    """
-    toPrint = ' '
-    nbRows = arr.shape[0]
-    nbCols = arr.shape[1]
-
-    for i in np.arange(0, nbRows, 1):
-        for j in np.arange(0, nbCols, 1):
-            toPrint += str(f"{arr[i, j]:.{nbC}f}" + '  ')
-        if i < nbRows - 1:
-            toPrint += '\n '
-    print(name + " = \n" + toPrint)
-
 def decompLU(A):
     """
     :param A: matrice de dimension n x n
@@ -93,7 +76,7 @@ def subsAvant(L, b):
     return x
 
 nbC = 2
-exempleNum = "4.3"
+exempleNum = "4.4"
 
 if exempleNum == "4.2":
     print("-------------------------------")
@@ -123,4 +106,13 @@ if exempleNum == "4.3":
     x = subsRebours(result[1], y)
     printMatrix(x,"x")
 
+    print("-------------------------------")
+
+if exempleNum == "4.4":
+    print("-------------------------------")
+    print("------ Exemple 4.2  -----------")
+    A = np.array([[1, 0, 0], [0, 2, 1], [3, 0, 1]])
+    result = decompLU(A)
+    printMatrix(result[0], "L")
+    printMatrix(result[1], "U")
     print("-------------------------------")
