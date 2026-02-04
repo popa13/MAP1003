@@ -18,9 +18,13 @@ def printTable(xs, name):
     for x in xs:
         print(f" {x:.5f}")
 
-import numpy as np
+def euclNorm(x):
+    s = 0
+    for e in x:
+        s += e[0] ** 2
+    return np.sqrt(e)
 
-def tableau_latex_valeurs_propres(A, ys, lambdas, lambda_star, precision=10):
+def tableau_latex_valeurs_propres(A, xs, lambdas, lambda_star, precision=10):
     """
     Génère un tableau LaTeX pour la méthode de la puissance
     avec erreur = résidu ||A y_k - lambda_star y_k||_2
@@ -29,15 +33,15 @@ def tableau_latex_valeurs_propres(A, ys, lambdas, lambda_star, precision=10):
     lines = []
     lines.append(r"\begin{tabular}{c c c c}")
     lines.append(r"\hline")
-    lines.append(r"$k$ & $\lambda_k$ & $\|A y_k - \hat{\lambda}_k y_k\|_2$ & $\left|\frac{e_k}{e_{k-1}}\right|$ \\")
+    lines.append(r"$k$ & $\lambda_k$ & $\|A x_k - \hat{\lambda}_k x_k\|_2$ & $\left|\frac{e_k}{e_{k-1}}\right|$ \\")
     lines.append(r"\hline")
 
     erreurs = []
 
     # Calcul des résidus
-    for y in ys:
-        y = np.array(y).reshape(-1)  # vecteur 1D
-        res = np.linalg.norm(A @ y - lambda_star * y, 2)
+    for k in range(len(xs)):
+        y = np.array(xs[k]).reshape(-1)  # vecteur 1D
+        res = np.linalg.norm(A @ y - lambdas[k] * y, 2)
         erreurs.append(res)
 
     for k in range(len(lambdas)):
@@ -72,42 +76,39 @@ def puissMethod(A, x0, tol, N):
     :return: valeur propre dominante de A (si elle existe) et vecteur propre approximatif
     """
 
-    x = x0
+    x = np.zeros(x0.size)
     x0_norm = np.linalg.norm(x0)
+    tol = tol
 
     # approximations du vecteur propre normalisé pour la valeur propre dominante
-    ys = []
-    y = 0
-    if x0_norm > 0 :
-        y = x0 / x0_norm
-        ys.append(x0 / x0_norm)
+    xs = []
+    if x0_norm > 0:
+        xs.append(x0 / x0_norm)
     else:
         print("Le vecteur d'initialisation est nul.")
         return 'nul'
 
-    # approximations de la valeur propre dominante
-    ls = []
-    ls.append((y.T @ A @ y).item())
+    # Initialisation de la valeur propre à 0
+    ls = [0]
 
     for k in range(1, N):
-        x = A @ y
-        print(x.size)# On itère sur le vecteur normalisé pour des raisons de stabilité numérique
+        x = A @ xs[k-1] # On itère sur le vecteur normalisé pour des raisons de stabilité numérique
         x_norm = np.linalg.norm(x)
         if x_norm > 0 :
-            y = x / x_norm
-            ys.append(y)
-            Ay = A @ y
-            l = (y.T @ Ay).item()
+            xs.append(x / x_norm)
+            x = xs[k]
+            Ax = A @ x
+            l = (x.T @ Ax).item()
             ls.append(l)
-            if np.linalg.norm(Ay - ls[k] * y)  < tol:
-                return ys, ls
+            if np.linalg.norm((Ax - ls[k] * x), 2)  < tol:
+                return xs, ls
         else:
             print("Le vecteur est null")
             return 'nul'
 
-    return ys, ls
+    return xs, ls
 
-exampleNb = "exo8"
+exampleNb = "MT2-4"
 
 if exampleNb == "4.12":
     A = np.array([[1, 2], [2, 1]])
@@ -120,8 +121,8 @@ if exampleNb == "4.12":
 
 if exampleNb == "exo8":
     A = np.array([[0, 0, 0, 56], [1, 0, 0, -78], [0, 1, 0, 17], [0, 0, 1, 6]])
-    x0 = np.array([[1], [0], [0], [0]])
-    result = puissMethod(A, x0, 0.0000001, 50)
-    printTableVector(result[0], "yk")
+    x0 = np.array([[1], [1], [0], [0]])
+    result = puissMethod(A, x0, 0.0001, 50)
+    printTableVector(result[0], "xk")
     printTable(result[1], "lambdak")
-    print(tableau_latex_valeurs_propres(A, result[0], result[1], 3, precision=10))
+    print(tableau_latex_valeurs_propres(A, result[0], result[1], 7, precision=10))
