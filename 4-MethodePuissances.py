@@ -90,7 +90,8 @@ def puissMethod(A, x0, tol, N):
     ls.append((y.T @ A @ y).item())
 
     for k in range(1, N):
-        x = A @ x
+        x = A @ y
+        print(x.size)# On itère sur le vecteur normalisé pour des raisons de stabilité numérique
         x_norm = np.linalg.norm(x)
         if x_norm > 0 :
             y = x / x_norm
@@ -106,14 +107,21 @@ def puissMethod(A, x0, tol, N):
 
     return ys, ls
 
-exampleNb = "4.12"
+exampleNb = "exo8"
 
 if exampleNb == "4.12":
     A = np.array([[1, 2], [2, 1]])
     x0 = np.array([[0],[1]])
-    result = puissMethod(A, x0, 0.00001, 15)
+    result = puissMethod(A, x0, 0.0000001, 15)
     printTableVector(result[0], "yk")
     printTable(result[1], "lambdak")
-    print(result[1])
 
+    print(tableau_latex_valeurs_propres(A, result[0], result[1], 3, precision=10))
+
+if exampleNb == "exo8":
+    A = np.array([[0, 0, 0, 56], [1, 0, 0, -78], [0, 1, 0, 17], [0, 0, 1, 6]])
+    x0 = np.array([[1], [0], [0], [0]])
+    result = puissMethod(A, x0, 0.0000001, 50)
+    printTableVector(result[0], "yk")
+    printTable(result[1], "lambdak")
     print(tableau_latex_valeurs_propres(A, result[0], result[1], 3, precision=10))
