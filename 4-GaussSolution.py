@@ -22,7 +22,7 @@ def elimGauss(A,b):
     """
     :param A: matrice de dimension n x n
     :param b: membre de droite de l'equation Ax = b
-    :return: systeme Bx = c ou B est triangulaire superieure
+    :return: systeme Ux = c ou U est triangulaire superieure
     """
     N = b.size
 
@@ -84,8 +84,8 @@ def subsRebourdv2(U, b):
     print("Le nombre d'opérations est " + str(nbOps))
     return x
 
-nbC = 2
-exempleNb = "4.1"
+nbC = 3
+exempleNb = "exo4"
 
 if exempleNb == "4.1":
     ####################
@@ -161,6 +161,83 @@ if exempleNb == "4.4":
     A = np.array([[1, 2], [1.05, 2]])
     printMatrix(A, "A")
     b = np.array([[10], [10.4]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "exo1":
+    ########
+    ## Exemple 4.4
+    print("-----------------------------------------")
+    print("------------ Exercice 1a ----------------")
+    A = np.array([[1.0, 2.0, 1.0], [2.0, 2.0, 3.0], [-1.0, -3.0, 0.0]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[0], [3], [2]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+    print("------------ Exercice 1b ----------------")
+    A = np.array([[1,2,1,4], [2, 0, 4, 3], [4, 2, 2, 1], [-3,1,3,2]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[13], [28], [20], [6]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "exo2":
+    ########
+    ## Exemple 4.4
+    print("-----------------------------------------")
+    print("------------ Exercice 2 ----------------")
+    A = np.array([[0.729, 0.81, 0.9], [1, 1, 1], [1.33, 1.21, 1.1]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[0.687], [0.834], [1]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "exo4":
+    ########
+    ## Exemple 4.4
+    print("-----------------------------------------")
+    print("------------ Exercice 4a ----------------")
+    A = np.array([[2, 3, 4], [4, 7, 11], [2, 2, 0]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[1], [-1], [0]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+    print("------------ Exercice 4b ----------------")
+    A = np.array([[2, 3, 4], [4, 7, 11], [2, 2, 0]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[-4], [10], [-2]])
     printMatrix(b, "b")
     result = elimGauss(A, b)
     printMatrix(result[0], "A triangulaire sup")
