@@ -65,7 +65,6 @@ def puissMethod(A, x0, tol, N):
     """
     :param A: Une matrice de dimensions n x n
     :param x0: Un vecteur de départ (intialisation)
-    :param ps: position du chiffre significatif le plus à droite
     :param N: Nombre d'itérations maximales
     :return: valeur propre dominante de A (si elle existe) et vecteur propre approximatif
     """
@@ -100,6 +99,59 @@ def puissMethod(A, x0, tol, N):
 
     return xs, ls
 
+def puissMethodv2(A, x0, N):
+    '''
+    :param A: matrice n x n
+    :param x0: vecteur initial
+    :param N: nombre d'iterations maximale
+    :return: retourne la valeur propre
+    '''
+
+    ###################
+    ### COMMENT
+    ### Ceci est une methode modifie de la methode des puissances
+    ### Elle se base sur le fait que le vecteur x_k issu des
+    ### iteration a la propriete que Ax_k est proche de lambda * x_k
+    ### Ainsi, on obtient la valeur propre par lambda = (Ax_k)^j / (x_k)^j
+    ### ou j est l'indice correspondant a la composante maximale de x_k.
+
+    x0_norm = np.linalg.norm(x0)
+
+    # approximations du vecteur propre normalisé pour la valeur propre dominante
+    xs = []
+    if x0_norm > 0:
+        xs.append(x0)
+    else:
+        print("Le vecteur d'initialisation est nul.")
+        return 'nul'
+
+    # Initialisation de la valeur propre à 0
+    Ax = A @ xs[0]
+
+    for k in range(1, N + 1):
+        Ax_norm = np.linalg.norm(Ax, 2)
+        if Ax_norm > 0:
+            xs.append(Ax / Ax_norm)
+            Ax = A @ xs[k]  # On itère sur le vecteur normalisé pour des raisons de stabilité numérique
+        else:
+            print("Le vecteur est null")
+            return 'nul'
+
+    n = len(x0)
+    ind = 0
+    for j in range(0, n):
+        for k in range(1 , n):
+            if abs(xs[N][k]) > abs(xs[N][j]):
+                ind = k
+
+    return Ax[ind] / xs[N][ind]
+
+def findMax(v):
+    """
+    :param v: un vecteur
+    :return: l'indice de la plus grande composante en valeur absolue
+    """
+
 exampleNb = "exo7"
 
 if exampleNb == "4.12":
@@ -114,7 +166,11 @@ if exampleNb == "4.12":
 if exampleNb == "exo7":
     A = np.array([[0, 0, 0, 56], [1, 0, 0, -78], [0, 1, 0, 17], [0, 0, 1, 6]])
     x0 = np.array([[1], [1], [1], [1]])
-    result = puissMethod(A, x0, 0.0001, 15)
+    result = puissMethod(A, x0, 0.0000000000001, 30)
     printTableVector(result[0], "xk")
     printTable(result[1], "lambdak")
     print(tableau_latex_valeurs_propres(A, result[0], result[1], 7, precision=10))
+
+    # Avec la methode puissMethodv2, une variante de la methode des puissances
+    result = puissMethodv2(A,x0, 30)
+    print(result)
