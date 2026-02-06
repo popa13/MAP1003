@@ -117,7 +117,7 @@ def puissMethodv2(A, x0, N):
 
     x0_norm = np.linalg.norm(x0)
 
-    # approximations du vecteur propre normalisé pour la valeur propre dominante
+    # Verification que le vecteur initial n'est pas le vecteur nul
     xs = []
     if x0_norm > 0:
         xs.append(x0)
@@ -125,7 +125,7 @@ def puissMethodv2(A, x0, N):
         print("Le vecteur d'initialisation est nul.")
         return 'nul'
 
-    # Initialisation de la valeur propre à 0
+    # Premiere iteration Ax_0
     Ax = A @ xs[0]
 
     for k in range(1, N + 1):
@@ -137,6 +137,7 @@ def puissMethodv2(A, x0, N):
             print("Le vecteur est null")
             return 'nul'
 
+    # On cherche l'indice de la plus grande composante (en valeur absolue)
     n = len(x0)
     ind = 0
     for j in range(0, n):
@@ -144,6 +145,7 @@ def puissMethodv2(A, x0, N):
             if abs(xs[N][k]) > abs(xs[N][j]):
                 ind = k
 
+    # On retourne (Ax_k)^(ind) / (x_k)^(ind) approx. = à lambda dominante
     return Ax[ind] / xs[N][ind]
 
 def findMax(v):
