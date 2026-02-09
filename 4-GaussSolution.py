@@ -25,7 +25,6 @@ def elimGauss(A,b):
     :return: systeme Ux = c ou U est triangulaire superieure
     """
     N = b.size
-
     for n in range(N):
         for k in np.arange(n + 1, N, 1):
             m = A[k,n] / A[n,n]
@@ -84,8 +83,8 @@ def subsRebourdv2(U, b):
     print("Le nombre d'opérations est " + str(nbOps))
     return x
 
-nbC = 3
-exempleNb = "exo4"
+nbC = 10
+exempleNb = "5.5"
 
 if exempleNb == "4.1":
     ####################
@@ -238,6 +237,20 @@ if exempleNb == "exo4":
     A = np.array([[2, 3, 4], [4, 7, 11], [2, 2, 0]], dtype=float)
     printMatrix(A, "A")
     b = np.array([[-4], [10], [-2]])
+    printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "5.5":
+    print("------------- Exemple 5.5 ----------")
+    A = np.array([[0.5, -0.2, 0.25], [0.25, 0.5, -0.2], [0.1, -0.25, -0.5]], dtype=float)
+    printMatrix(A, "A")
+    b = np.array([[6], [-9], [8]], dtype=float)
     printMatrix(b, "b")
     result = elimGauss(A, b)
     printMatrix(result[0], "A triangulaire sup")
