@@ -129,7 +129,7 @@ def findSpectralRadius(A):
     print(eigenVals)
     print(specRadius)
 
-exempleNb = "5.6"
+exempleNb = "Exo"
 nbC = 3
 
 if exempleNb == "5.5":
@@ -143,6 +143,38 @@ if exempleNb == "5.5":
     print(jacobi_table_latex(result,5))
 
 if exempleNb == "5.6":
-    print("-----------Exemple 5.5 -------------")
+    print("-----------Exemple 5.6 -------------")
     A = np.array([[2, -1, 1], [-2,2,-3], [4, -1, -1]], dtype=float)
     findSpectralRadius(A)
+
+if exempleNb == "Exo5.6":
+    print("------------- Exercice 5.6 -----------")
+    A = np.array([[9, -2, 1], [-1, 5, -1], [1, -2, 9]], dtype=float)
+    b = np.array([[13], [9], [-11]], dtype=float)
+    x0 = np.array([[0], [0], [0]], dtype=float)
+    M = 15
+    result = methodJac(A, b, x0, 0.001, M)
+    print(jacobi_table_latex(result, 5))
+
+if exempleNb == "Exo5.8":
+    print("------------- Exercice 5.8 -----------")
+    A = np.array([[2, -1], [-1, 2]], dtype=float)
+    b = np.array([[1], [2]], dtype=float)
+    x0 = np.array([[0], [0]], dtype=float)
+    M = 10
+    result = methodJac(A, b, x0, 0.001, M)
+    print(jacobi_table_latex(result, 5))
+
+
+if exempleNb == "Exo":
+    print("------------- Exercice 5.8 -----------")
+    A = np.array([[4, -4], [-1, 4]], dtype=float)
+    b = np.array([[3], [5]], dtype=float)
+    x0 = np.array([[0], [0]], dtype=float)
+    M = 50
+    result = methodJac(A, b, x0, 0.0000000000000001, M)
+    print(jacobi_table_latex(result, 10))
+
+    findSpectralRadius(A)
+
+

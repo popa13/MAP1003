@@ -182,3 +182,25 @@ if exempleNb == "5.1":
     print(result)
     tableLatex = newton_multivar_to_latex_table(result, ["x", "y"], 10)
     print(tableLatex)
+
+if exempleNb == "exo5.3":
+    print("--------- Exercice 5.3 ---------")
+
+    def F(x):
+        return np.array([
+            x[0]**2 - 10*x[0] + x[1]**2 + 8,
+            x[0] * x[1]**2 + x[0] - 10*x[1] + 8
+        ])
+
+
+    def J(x):
+        return np.array([
+            [2*x[0] - 10, 2*x[1]],
+            [x[1]**2+1, 2*x[0]*x[1]-10]
+        ])
+
+
+    result = newton_multi(F, J, x0=[0, 0], m=-3)
+    print(result)
+    tableLatex = newton_multivar_to_latex_table(result, ["x", "y"], 10)
+    print(tableLatex)

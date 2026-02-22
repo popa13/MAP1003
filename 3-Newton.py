@@ -239,5 +239,25 @@ print("--------------------------------------------------")
 n = len(result)
 print("Valeur de la constante C:" + str(f"{limiteC(df,ddf,result[n-1]):.10f}"))
 
+######
+print("-----------------------")
+print("Exemple 3.4")
+def f(t):
+    return t**2 - 3
+
+def df(t):
+    return 2*t
+
+def ddf(t):
+    return 2
+
+result = newton(f, df, 2, -5, 15)
+print(result)
+tableLatex = newton_table_latex(result)
+print(tableLatex)
+n = len(result)
+print(f(result[n-1]))
+
+
 
 

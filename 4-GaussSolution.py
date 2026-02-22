@@ -84,7 +84,7 @@ def subsRebourdv2(U, b):
     return x
 
 nbC = 10
-exempleNb = "5.5"
+exempleNb = "Exo"
 
 if exempleNb == "4.1":
     ####################
@@ -252,6 +252,19 @@ if exempleNb == "5.5":
     printMatrix(A, "A")
     b = np.array([[6], [-9], [8]], dtype=float)
     printMatrix(b, "b")
+    result = elimGauss(A, b)
+    printMatrix(result[0], "A triangulaire sup")
+    printMatrix(result[1], "b modifie")
+
+    print("Substitution")
+    sol = subsRebourdv2(result[0], result[1])
+    printMatrix(sol, "x")
+
+if exempleNb == "Exo":
+    print("------------- Exercice 5.8 -----------")
+    A = np.array([[4, -1], [-1, 3]], dtype=float)
+    b = np.array([[3], [5]], dtype=float)
+    x0 = np.array([[0], [0]], dtype=float)
     result = elimGauss(A, b)
     printMatrix(result[0], "A triangulaire sup")
     printMatrix(result[1], "b modifie")

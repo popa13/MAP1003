@@ -154,7 +154,7 @@ def findMax(v):
     :return: l'indice de la plus grande composante en valeur absolue
     """
 
-exampleNb = "exo7"
+exampleNb = "exo"
 
 if exampleNb == "4.12":
     A = np.array([[1, 2], [2, 1]])
