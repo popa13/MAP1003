@@ -73,7 +73,7 @@ def get_latex_expression(coeffs, precision=2):
 nbExample = "exo7.6"
 
 if nbExample == "7.5v1":
-    # Example 7.5
+    # Example 7.5 - Resolution a la main
     def f(x):
         k = np.floor(x)
         print(k)
@@ -109,9 +109,11 @@ if nbExample == "7.5v2":
     t = np.linspace(0, 2*np.pi, 4)
     t = t[0:3]
     y = f(t/(2*np.pi))
+    # Resolution du systeme par la methode matricielle Mx = y
     a = solve_trigo_matrix(t, y)
     print(np.round(a, 5))
 
+    # Graphe de la fonction f et du poly. Trigo.
     x = np.linspace(-1, 2, 300)
     yT = eval_trigo(a, 2*np.pi*x)
     yF = f(x)
@@ -133,11 +135,13 @@ if nbExample == "7.6":
         k = np.floor(x)
         return (x - k) * (1 - x + k)
 
+    # Setup les parametres
     n = 4
     N = 2 * n + 1
     t = np.linspace(0, 2 * np.pi, N+1)
     t = t[0:N]
     y = f(t / (2 * np.pi))
+    # Resolution du systeme
     a = solve_trigo_matrix(t, y)
     print(np.round(a, 5))
     latex_expr = get_latex_expression(a, 5)
@@ -147,6 +151,7 @@ if nbExample == "7.6":
     yT = eval_trigo(a, 2 * np.pi * x)
     yF = f(x)
 
+    # GRAPHE de la fonction f et du poly. trigo.
     plt.figure()
     plt.plot(x, yF, label="f(x)", color="blue")
     plt.plot(x, yT, label="T(x)", color="green")
@@ -159,7 +164,7 @@ if nbExample == "7.6":
     plt.savefig("example7-6.png", dpi=450)
 
 if nbExample == "7.7":
-    # Exemple 7.7 avec la resolution de la matrice par la méthode
+    # Exemple 7.7 avec la dft
     def f(x):
         k = np.floor(x)
         return (x - k) * (1 - x + k)
@@ -167,6 +172,8 @@ if nbExample == "7.7":
     t = np.linspace(0, 2*np.pi, 4)
     t = t[0:3]
     y = f(t/(2*np.pi))
+    # Calcul des coefficients par la transformee de
+    #   Fourier discrete
     a = dft(t, y)
     print(np.round(a, 5))
 
@@ -174,6 +181,7 @@ if nbExample == "7.7":
     yT = eval_trigo(a, 2*np.pi*x)
     yF = f(x)
 
+    # Graphe de la fonction f et poly. trigo.
     plt.figure()
     plt.plot(x, yF, label="f(x)", color="blue")
     plt.plot(x, yT, label="T(x)", color="green")
@@ -186,7 +194,7 @@ if nbExample == "7.7":
     plt.savefig("example7-7.png", dpi=450)
 
 if nbExample == "7.8":
-    # Exemple 7.8 avec la resolution de la matrice par la méthode
+    # Exemple 7.8 avec la dft
     print("---- Exemple 7.8 ----")
     def f(x):
         # Fonction échantillonnée
@@ -275,12 +283,15 @@ if nbExample == "exo7.6":
     t = t[0:5]
     print(t)
     y = np.array([1, 0, -1, 0, 1])
+    # Calcul des coefficients par la DFT
     a = dft(t, y)
     print(np.round(a, 5))
 
+    # Domaine et valeurs du poly Trigo.
     x = np.linspace(-2 * np.pi, 4 * np.pi, 450)
     yT = eval_trigo(a, x)
 
+    # Graphe du polynome trigo
     fig, ax = plt.subplots()
     plt.plot(x, yT, label="T(x)", color="green")
     plt.scatter(t, y, label="Points d'interpolation", zorder=3, color="red")
