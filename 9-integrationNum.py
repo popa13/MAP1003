@@ -10,7 +10,7 @@ def generate_latex_table(h_values, Th_values, errors, p, nbChiffre=5):
     fmt = f".{nbChiffre}f"
 
     # Exposant affiché seulement si p != 1
-    eh_header = "$e_{h/2}/e_h$" if p == 1 else f"$e_{{h/2}} / e_h}}$"
+    eh_header = "$e_{h}/e_{2h}$"
 
     lines = []
     lines.append(r"\begin{table}[h!]")
@@ -173,3 +173,23 @@ if nEx == "9.6":
         return np.exp(-x**2)
 
     print(quad_Gauss_deuxpts(f,0,1))
+
+def f(x):
+    return 1 / (1 + x)
+
+a, b = 0, 1
+# Nb of divisions
+N = np.arange(3, 8, 1)
+# Values of h
+h = (b-a) / (np.pow(2, N))
+v = np.log(2)
+print(h)
+# Valeur approx de l'integrale
+T = np.zeros(len(h))
+e = np.zeros(len(h))
+e[0] = None
+for k in np.arange(len(T)):
+    T[k] = methode_trapeze(f, a, b, 2**N[k])
+    e[k] = np.abs(v - T[k])
+
+print(generate_latex_table(h, T, e, 2, 6))

@@ -50,7 +50,7 @@ def generate_latex_table(h_values, Th_values, errors, p, nbChiffre=5):
 
     return "\n".join(lines)
 
-nbExemple = "7.2"
+nbExemple = "7.3"
 
 if nbExemple == "7.2":
     print("--- Exemple 7.2 ---")
