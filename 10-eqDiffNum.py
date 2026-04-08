@@ -555,4 +555,120 @@ if exNb == "10.8":
     plt.tight_layout()
     plt.savefig("Solution_approx_exemple_10-8.png", dpi=300)
 
+# Code pour les exercices
+exoNb = "exo7"
+if exoNb == "exo2":
+    print("---------- Exercice 10.3 ----------")
+
+    # fct f
+    def f(t, y):
+        return y * (1 - t)
+
+    # Solution exacte
+    def ye(t):
+        return np.exp(t - t**2 / 2)
+
+    # Cond initiale
+    y0 = 1
+
+    ####
+    # Écrire la table des erreurs maximales
+    methodes = []
+    m = np.arange(1, 6, 1)
+    H = 1 / np.pow(2, m)
+    max_errors = []
+
+    for h in H:
+        t_values = np.arange(0, 1 + h, h)
+        y_approx = euler_explicite(h, t_values, y0, f)
+        y_exacte = ye(t_values)
+        errors = np.abs(y_exacte - y_approx)
+        max_errors.append(np.max(errors))
+        methodes.append((t_values, y_approx, "Euler Explicite h = " + str(h)))
+
+        ## Decommenter les deux prochaines lignes pour plus d'infos
+        print("--- Table de valeurs h = " + str(h) + " ---")
+        print(generate_latex_table(t_values, y_exacte, y_approx, errors, "Table de valeurs"))
+
+    # écrire la table pour les ration des erreurs maximales
+    print()
+    print("--- Table des erreurs maximales ---")
+    print(tracer_table_LaTeX_erreursMax(H, max_errors, nbChiffre=15))
+
+if exoNb == "exo5":
+    print("---------- Exercice 10.5 ----------")
+
+    # fct f
+    def f(t, y):
+        return y - t**2 + 1
+
+    # Solution exacte
+    def ye(t):
+        return (t + 1)**2 - 0.5 * np.exp(t)
+
+    # Cond initiale
+    y0 = 0.5
+
+    ####
+    # Écrire la table des erreurs maximales
+    methodes = []
+    m = np.arange(1, 6, 1)
+    H = 1 / np.pow(2, m)
+    max_errors = []
+
+    for h in H:
+        t_values = np.arange(0, 2 + h, h)
+        y_approx = runge_kutta_ordreDeux(h, t_values, y0, f)
+        y_exacte = ye(t_values)
+        errors = np.abs(y_exacte - y_approx)
+        max_errors.append(np.max(errors))
+        methodes.append((t_values, y_approx, "RK2 h = " + str(h)))
+
+        ## Decommenter les deux prochaines lignes pour plus d'infos
+        print("--- Table de valeurs h = " + str(h) + " ---")
+        print(generate_latex_table(t_values, y_exacte, y_approx, errors, "Table de valeurs"))
+
+    # écrire la table pour les ration des erreurs maximales
+    print()
+    print("--- Table des erreurs maximales ---")
+    print(tracer_table_LaTeX_erreursMax(H, max_errors, nbChiffre=15))
+
+if exoNb == "exo7":
+    print("---------- Exercice 10.7 ----------")
+
+    # fct f
+    def f(t, y):
+        return t + y
+
+    # Solution exacte
+    def ye(t):
+        return 2 * np.exp(t) - t - 1
+
+    # Cond initiale
+    y0 = 1
+
+    ####
+    # Écrire la table des erreurs maximales
+    methodes = []
+    m = np.arange(1, 6, 1)
+    H = 1 / np.pow(2, m)
+    max_errors = []
+
+    for h in H:
+        t_values = np.arange(0, 1 + h, h)
+        y_approx = runge_kutta_ordreQuatre(h, t_values, y0, f)
+        y_exacte = ye(t_values)
+        errors = np.abs(y_exacte - y_approx)
+        max_errors.append(np.max(errors))
+        methodes.append((t_values, y_approx, "RK4 h = " + str(h)))
+
+        ## Decommenter les deux prochaines lignes pour plus d'infos
+        print("--- Table de valeurs h = " + str(h) + " ---")
+        print(generate_latex_table(t_values, y_exacte, y_approx, errors, "Table de valeurs"))
+
+    # écrire la table pour les ration des erreurs maximales
+    print()
+    print("--- Table des erreurs maximales ---")
+    print(tracer_table_LaTeX_erreursMax(H, max_errors, nbChiffre=15))
+
 
