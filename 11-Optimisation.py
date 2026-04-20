@@ -81,7 +81,7 @@ def methode_du_gradient(f, nf, x0, alpha, N, tol):
 
 def gradientMethod_table_latex(xs, ndigits=10, env="tabular"):
     """
-    Génère un tableau LaTeX pour une méthode de point fixe vectorielle.
+    Génère un tableau LaTeX pour une méthode de descente de gradient.
 
     Colonnes :
     k | composantes de x_k | ||x_k - x_{k-1}||_2 | |e_{k-1}/e_k|
